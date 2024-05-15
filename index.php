@@ -49,6 +49,7 @@
                 <li class="list-group-item">Baterías</li>
                 <li class="list-group-item">Teclados</li>
                 <li class="list-group-item">Instrumentos de viento</li>
+                <a>Ubicación en Google Maps, aún no integrada</a>
             </ul>
         </div>
         <div class="col-md-9">
@@ -118,6 +119,12 @@
                     <td colspan="3">Total:</td>
                     <td id="total-carrito"></td>
                     <td></td>
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+  <input type="hidden" name="cmd" value="_s-xclick" />
+  <input type="hidden" name="hosted_button_id" value="WU9457RRZPD5C" />
+  <input type="hidden" name="currency_code" value="USD" />
+  <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" title="PayPal es una forma segura y fácil de pagar en línea." alt="Comprar ahora" />
+</form>
                 </tr>
             </tfoot>
         </table>
