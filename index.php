@@ -6,6 +6,8 @@
     <title>Tienda de Artículos Musicales</title>
     <link href="src/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="src/css/style.css">
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYn3eAr8mSfg5OVkBUavG2xbnYzl77CxA&callback=console.debug&libraries=maps,marker&v=beta">
+    </script>
 </head>
 <body>
 <div id="logo1">
@@ -49,7 +51,7 @@
                 <li class="list-group-item">Baterías</li>
                 <li class="list-group-item">Teclados</li>
                 <li class="list-group-item">Instrumentos de viento</li>
-                <a>Ubicación en Google Maps, aún no integrada</a>
+                <img src="src/img/mp.png">
             </ul>
         </div>
         <div class="col-md-9">

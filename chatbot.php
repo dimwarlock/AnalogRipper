@@ -1,81 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #000;
-            color: #fff;
-        }
-        #chatbot {
-            margin: 0 auto;
-            max-width: 400px;
-            border: 1px solid #444;
-            background-color: #222;
-            border-radius: 5px;
-        }
-        header {
-            background: #333;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 5px 5px 0 0;
-        }
-        .chat-close {
-            color: #fff;
-            float: right;
-        }
-        .chat {
-            padding: 20px;
-        }
-        .chat-history {
-            height: 200px;
-            overflow-y: scroll;
-            margin-bottom: 20px;
-        }
-        .chat-message {
-            padding: 10px 20px;
-            background: #333;
-            border-radius: 0 0 5px 5px;
-        }
-        .chat-message textarea {
-            width: calc(100% - 110px);
-            resize: none;
-        }
-        .chat-message button {
-            width: 90px;
-            background-color: #8B0000;
-            border: none;
-            color: #fff;
-            transition: background-color 0.3s ease;
-        }
-        .chat-message button:hover {
-            background-color: #ff0000;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Personalización de estilos */
+    body {
+      background-color: black;
+    }
+
+    .chat-interface {
+      background-color: #8B0000; /* Carmesí oscuro */
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
+    .message {
+      margin-bottom: 10px;
+    }
+
+    .user-message {
+      text-align: right;
+    }
+
+    .behavior-message {
+      color: #8B0000; /* Color rojo del contenedor */
+    }
+  </style>
 </head>
 <body>
-    <h1 class="text-center">Chat de Soporte</h1>
-    <div id="chatbot">
-        <header class="clearfix">
-            <a href="#" class="chat-close">x</a>
-            <h4>Chatbot</h4>
-        </header>
-        <div class="chat">
-            <!-- Aquí se mostrarían los mensajes del chat -->
-            <div class="chat-history"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="chat-interface">
+          <h2>Chatbot</h2>
+          <div id="chatArea">
+            <!-- Aquí se mostrará el chat -->
+          </div>
+          <!-- Campo de entrada de texto -->
+          <input type="text" id="userInput" class="form-control" placeholder="Type your message...">
         </div>
-        <form class="chat-message clearfix">
-            <textarea name="message-to-send" id="message-to-send" class="form-control" placeholder="Escribe tu mensaje aquí..." rows="3"></textarea>
-            <button type="submit" class="btn btn-dark">Enviar</button>
-        </form>
+      </div>
     </div>
+  </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- Scripts -->
+  <script type="importmap">
+    {
+      "imports": {
+        "@google/generative-ai": "https://esm.run/@google/generative-ai"
+      }
+    }
+  </script>
+  <script type="module">
+    // Fetch your API_KEY
+    const API_KEY = "AIzaSyBrhhs05cA2Cvqxzun3HsQVYx6ZU47kZ9E";
+
+    import { GoogleGenerativeAI } from "@google/generative-ai";
+
+    // Access your API key (see "Set up your API key" above)
+    const genAI = new GoogleGenerativeAI(API_KEY);
+
+    async function sendMessage(message) {
+      const chatArea = document.getElementById('chatArea');
+      const userMessageElement = document.createElement('div');
+      userMessageElement.classList.add('message', 'user-message');
+      userMessageElement.textContent = message;
+      chatArea.appendChild(userMessageElement);
+
+      // For text-only input, use the gemini-pro model
+      const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+      const result = await model.generateContent(message);
+      const response = await result.response;
+      const text = await response.text();
+
+      // Agregar el mensaje del bot solo si el mensaje del usuario no es el de comportamiento
+      if (message !== "") {
+        const botMessageElement = document.createElement('div');
+        botMessageElement.classList.add('message');
+        botMessageElement.textContent = text;
+        chatArea.appendChild(botMessageElement);
+      }
+    }
+
+    async function sendInitialMessage() {
+      const initialMessage = ""
+      const chatArea = document.getElementById('chatArea');
+      const behaviorMessage = document.createElement('div');
+      behaviorMessage.classList.add('message', 'behavior-message');
+      behaviorMessage.textContent = initialMessage;
+      chatArea.appendChild(behaviorMessage);
+      await sendMessage(initialMessage);
+    }
+
+    sendInitialMessage();
+
+    document.getElementById('userInput').addEventListener('keypress', async function(event) {
+      if (event.key === 'Enter') {
+        const userInput = this.value;
+        if (userInput.trim() !== '') {
+          await sendMessage(userInput);
+          this.value = ''; // Limpiar el campo de entrada después de enviar el mensaje
+        }
+      }
+    });
+  </script>
 </body>
 </html>
-
