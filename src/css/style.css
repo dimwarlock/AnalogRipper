@@ -1,0 +1,49 @@
+/* Cambiando el color de fondo del cuerpo */
+        body {
+            background-color: #000000;
+        }
+        #logo1{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #logo{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* Cambiando el color de fondo de la barra de navegación */
+        .navbar {
+            background-color: #5f0000 !important;
+            color: #ffffff;
+        }
+        /* Cambiando el color del texto de la barra de navegación */
+        .navbar-dark .navbar-nav .nav-link {
+            color: #ffffff;
+        }
+        h3{
+            color:#ffffff;
+        }
+        h2{
+            color:#ffffff;
+        }
+        /* Cambiando el color de fondo de los elementos de la lista */
+        .list-group-item {
+            background-color: #5f0000;
+            border-color: #5f0000;
+            color:#ffffff;
+        }
+        /* Cambiando el color del borde de las tarjetas al pasar el mouse sobre ellas */
+        .card:hover {
+            border-color: #aa0000;
+        }
+        /* Cambiando el color de fondo y el borde de los botones */
+        .btn-primary {
+            background-color: #aa0000;
+            border-color: #aa0000;
+        }
+        /* Cambiando el color de fondo y el borde de los botones al pasar el mouse sobre ellos */
+        .btn-primary:hover {
+            background-color: #5f0000;
+            border-color: #5f0000;
+        }
